@@ -1,0 +1,90 @@
+
+body{
+    padding: 0px;
+    margin: 0px;
+    background: black;
+    color: white;
+}
+.container {
+    height: 80vh;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container, .container header{
+    padding-bottom: 10vh;
+}
+
+.tic-tac-toe-area {
+    align-items: center;
+}
+
+.tic-tac-toe {
+    padding: 0px;
+    margin: 0px;
+    border-collapse: collapse;
+}
+
+.tic-tac-toe td {
+    width: 10vh;
+    height: 10vh;
+    font-size: 8vh;
+    text-align: center;
+
+    border: 0.1em solid white;
+}
+
+.container header{
+    padding-top: 5vh;
+    font-size: 8vh;
+}
+
+.container table{
+    font-size: 5vh;
+}
+
+#score td, #score th{
+    padding-right: 3vh; padding-left: 3vh;
+    text-align: center;
+}
+
+#game-options input, #game-options button{
+    padding: 0px;
+    margin-top: 2vh;
+    margin-bottom: 5vh;
+    margin-left: 2vh; margin-right: 2vh;
+    width: 17vh;
+    border: 0.5vh solid white;
+    font-size: 3vh;
+    background: black;
+    color: white;
+}
+
+#play:hover {
+    background: rgb(41, 41, 41);
+}
+
+#play:active{
+    animation-name: "click_button";
+    animation-duration: 0.2s;
+}
+
+@keyframes click_button{
+    0%{
+        transform: scale(1.0);
+    }
+    50%{
+        transform: scale(1.05)
+    }
+    100%{
+        transform: scale(1.0);
+    }
+}
+
+@media all and (max-width: 764){
+    header{
+        font-size: 10vh;
+    }
+}

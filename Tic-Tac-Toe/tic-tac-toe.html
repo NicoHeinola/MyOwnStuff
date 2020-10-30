@@ -7,6 +7,25 @@
         <script rel="text/javascript" src="./tic-tac-toe.js"></script>
     </head>
     <body onload="CreateTicTacToe();">
-        
+        <div class="container">
+            <header>Tic-Tac-Toe</header>
+            <div id="tic-tac-toe-area" class="tic-tac-toe-area"></div>
+            <div id="game-options">
+                <input type="text" id="rows" value="3">
+                <button id="play" onclick="ClearLayout()">Play</button>
+            </div>
+            <table id="score">
+                <tbody>
+                    <tr>
+                        <th>O-Player</th>
+                        <th>X-Player</th>
+                    </tr>
+                    <tr>
+                        <td id="player1score">0</td>
+                        <td id="player2score">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
