@@ -4,14 +4,19 @@ var toWin = size;
 var currentTurn = "X";
 var scoreO = 0;
 var scoreX = 0;
-
+var victory = false;
 
 function CreateTicTacToe(){
     CreateLayout();
 }
 
 function GetSize(){
-    return Number(document.getElementById("rows").value)
+    let max = 15;
+    let min = 2;
+    let num = Number(document.getElementById("rows").value)
+    if(num > max) num = max;
+    if(num < min) num = min;
+    return num;
 }
 
 function CreateLayout(){
@@ -64,22 +69,25 @@ function CreateColumnElement(row, col){
 }
 
 function OnClick(element){
-    let position = element.id.split(".");
-    let row = parseInt(position[0].substring(1));
-    let col = parseInt(position[1].substring(1));
+    if(!victory){
+        let position = element.id.split(".");
+        let row = parseInt(position[0].substring(1));
+        let col = parseInt(position[1].substring(1));
 
-    if(GetValue(row, col) == ""){
-        ToggleTurn(element.id);
-        layout[row][col] = currentTurn;
-        win_positions = CheckVictoryFromPosition(row, col);
-        if(win_positions.length > 0){
-            Win();
+        if(GetValue(row, col) == ""){
+            ToggleTurn(element.id);
+            layout[row][col] = currentTurn;
+            win_positions = CheckVictoryFromPosition(row, col);
+            if(win_positions.length > 0){
+                Win();
+            }
         }
     }
 
 }
 
 function Win(){
+    victory = true;
     for(let i = 0; i < win_positions.length; i++){
         let win_element = GetValueElement("r"+win_positions[i][0]+".c"+win_positions[i][1]);
         win_element.style.color="orange";
@@ -91,12 +99,11 @@ function Win(){
         scoreO += 1;
         document.getElementById("player2score").textContent = scoreO
     }
-
-    ClearLayout();
 }
 
 function ClearLayout(){
     currentTurn = "X";
+    victory = false;
 
     console.log(GetSize())
     if(GetSize() != size){
@@ -132,6 +139,10 @@ function tempPosToWin(tempPos, winPos){
         winPos.push(tempPos[i]);
     }
     return winPos;
+}
+
+function CheckNoWin(){
+    
 }
 
 function CheckVictoryFromPosition(row, col){

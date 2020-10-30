@@ -87,4 +87,7 @@ body{
     header{
         font-size: 10vh;
     }
+    th {
+        font-size: 1vh;
+    }
 }
