@@ -1,5 +1,7 @@
 var layout = [];
 var size = 3;
+var max = 6;
+var min = 2;
 var toWin = size;
 var currentTurn = "X";
 var scoreO = 0;
@@ -11,12 +13,55 @@ function CreateTicTacToe(){
 }
 
 function GetSize(){
-    let max = 15;
-    let min = 2;
     let num = Number(document.getElementById("rows").value)
-    if(num > max) num = max;
-    if(num < min) num = min;
+    if(num > max) {num = max; AnimateInvalidNumber()}
+    if(num < min) {num = min; AnimateInvalidNumber()}
+    if(isNaN(num)) {num = 3; AnimateInvalidNumber()}
+    document.getElementById("rows").value = String(num);
     return num;
+}
+
+function AnimateInvalidNumber(){
+    var id = setInterval(HandleAnimation);
+    var frame_count = 0;
+    var max_frame_count = 60;
+    var half = max_frame_count / 2;
+    var multiplier = 15;
+    var element = document.getElementById("rows");
+    function HandleAnimation(){
+        frame_count += 1;
+        if(frame_count > max_frame_count){
+            element.style.background = "black";
+            clearInterval(id);
+        } else {
+            if(frame_count >= half){
+                element.style.background = "rgb("+((max_frame_count-frame_count)*multiplier)+",0,0)";
+            }else{
+                element.style.background = "rgb("+(frame_count*multiplier)+",0,0)";
+            }
+        }
+    }
+}
+
+function AnimateSelection(element){
+    var max_frames = 20;
+    var frame_count = 0;
+    var id = setInterval(HandleAnimation);
+    function HandleAnimation(){
+        frame_count += 1;
+        if(frame_count > max_frames){
+            clearInterval(id);
+        } else {
+            element.style.fontSize = (frame_count/40)*3.5+"em";
+        }
+    }
+}
+
+function CreateOverlayText(){
+    let overlay_text = document.createElement("p");
+    overlay_text.id = "overlay";
+    overlay_text.style.display = "none";
+    return overlay_text;
 }
 
 function CreateLayout(){
@@ -24,6 +69,9 @@ function CreateLayout(){
     let row_element;
     let column_element;
     let tic_tac_toe_area = document.getElementById("tic-tac-toe-area");
+    tic_tac_toe_area.style.position = "relative"
+    let overlay_text = CreateOverlayText();
+    tic_tac_toe_area.appendChild(overlay_text);
     let tic_tac_toe = document.createElement("table");
     // Creates layout.
     tic_tac_toe.className = "tic-tac-toe";
@@ -76,14 +124,34 @@ function OnClick(element){
 
         if(GetValue(row, col) == ""){
             ToggleTurn(element.id);
+            AnimateSelection(element);
             layout[row][col] = currentTurn;
             win_positions = CheckVictoryFromPosition(row, col);
             if(win_positions.length > 0){
                 Win();
+            } else {
+                CheckDraw();
             }
         }
     }
 
+}
+
+function GetEndGameElement(){
+    return document.getElementById("overlay");
+}
+
+function SetEndGameText(text){
+    let element = GetEndGameElement();
+    element.textContent = text;
+    element.style.display = "block";
+
+}
+
+function HideEndGameText(){
+    let element = GetEndGameElement();
+    element.textContent = "";
+    element.style.display = "none"
 }
 
 function Win(){
@@ -93,19 +161,26 @@ function Win(){
         win_element.style.color="orange";
     }
     if(currentTurn == "O"){
-        scoreX += 1;
-        document.getElementById("player2score").textContent = scoreX
-    } else {
         scoreO += 1;
-        document.getElementById("player2score").textContent = scoreO
+        document.getElementById("player1score").textContent = scoreO;
+        SetEndGameText("O-Player Wins!");
+    } else {
+        scoreX += 1;
+        document.getElementById("player2score").textContent = scoreX;
+        SetEndGameText("X-Player Wins!");
     }
+}
+
+function Draw(){
+    victory = true;
+    SetEndGameText("Draw!");
 }
 
 function ClearLayout(){
     currentTurn = "X";
     victory = false;
+    HideEndGameText();
 
-    console.log(GetSize())
     if(GetSize() != size){
         size = GetSize();
         layout = [];
@@ -141,8 +216,15 @@ function tempPosToWin(tempPos, winPos){
     return winPos;
 }
 
-function CheckNoWin(){
-    
+function CheckDraw(){
+    for(let i = 0; i < size; i++){
+        for(let n = 0; n < size; n++){
+            if(layout[i][n] != ""){
+                return;
+            }
+        }
+    }
+    Draw();
 }
 
 function CheckVictoryFromPosition(row, col){

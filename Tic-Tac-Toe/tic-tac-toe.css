@@ -1,5 +1,24 @@
+#overlay {
+    display: none;
+    color: white;
+    border-radius: 0.5vh;
+    background: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    border: 1vh groove rgba(255, 255, 255);
+    padding: 0px;
+    margin: 0px;
+    font-size: 5vh;
+    z-index: 2;
+    width: 75%;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
 
 body{
+    font-family: 'Ubuntu', sans-serif;
     padding: 0px;
     margin: 0px;
     background: black;
@@ -22,12 +41,14 @@ body{
 }
 
 .tic-tac-toe {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     border-collapse: collapse;
 }
 
 .tic-tac-toe td {
+    font-family: 'Arimo', sans-serif;
+
     width: 10vh;
     height: 10vh;
     font-size: 8vh;
@@ -36,7 +57,13 @@ body{
     border: 0.1em solid white;
 }
 
+.tic-tac-toe td:hover {
+    background: rgb(41, 41, 41);
+    border-radius: 10px;
+}
+
 .container header{
+    font-family: 'Itim', cursive;
     padding-top: 5vh;
     font-size: 8vh;
 }
@@ -48,6 +75,14 @@ body{
 #score td, #score th{
     padding-right: 3vh; padding-left: 3vh;
     text-align: center;
+}
+
+#score {
+    border: 0.5vh dashed white;
+}
+
+#score td{
+    border-top: 0.5vh dashed white;
 }
 
 #game-options input, #game-options button{
@@ -83,11 +118,13 @@ body{
     }
 }
 
-@media all and (max-width: 764){
-    header{
-        font-size: 10vh;
-    }
+@media all and (min-width: 764px){
     th {
-        font-size: 1vh;
+        font-size: 4vh;
     }
+
+    #score td, #score th{
+        padding-right: 2vh; padding-left: 2vh;
+    }
+    
 }
