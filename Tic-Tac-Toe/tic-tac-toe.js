@@ -184,7 +184,7 @@ function ClearLayout(){
     if(GetSize() != size){
         size = GetSize();
         layout = [];
-        document.getElementById("tic-tac-toe-area").textContent = ""
+        document.getElementById("tic-tac-toe-area").textContent = "";
         CreateLayout();
     } else {
         for(let i = 0; i < layout.length; i++){
@@ -219,7 +219,7 @@ function tempPosToWin(tempPos, winPos){
 function CheckDraw(){
     for(let i = 0; i < size; i++){
         for(let n = 0; n < size; n++){
-            if(layout[i][n] != ""){
+            if(layout[i][n] == ""){
                 return;
             }
         }
